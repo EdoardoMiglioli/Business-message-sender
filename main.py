@@ -23,7 +23,9 @@ message_text = ""
 
 def get_phone_numbers():
      cur.execute("SELECT tel FROM business;")
-     return cur.fetchall()
+     rows = cur.fetchall()
+
+     return [row[0] for row in rows if row[0]]
 
 def send_message(number):
      message = client.messages.create(
@@ -31,3 +33,5 @@ def send_message(number):
                          from_=os.environ['PHONE_NUMBER'],
                          to={number}
                     )
+
+print(get_phone_numbers())
